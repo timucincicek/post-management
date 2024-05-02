@@ -1,0 +1,800 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>post-management documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">post-management documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#activePostReducer" title="src/app/store/reducers.ts" ><b>activePostReducer</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#activePostState" title="src/app/store/reducers.ts" ><b>activePostState</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#arrayOfPostProperties" title="src/app/constants/post-properties.ts" ><b>arrayOfPostProperties</b>&nbsp;&nbsp;&nbsp;(src/.../post-properties.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environment/environment.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extendedPostListReducer" title="src/app/store/reducers.ts" ><b>extendedPostListReducer</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extendedPostListState" title="src/app/store/reducers.ts" ><b>extendedPostListState</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#fetchPosts" title="src/app/store/actions.ts" ><b>fetchPosts</b>&nbsp;&nbsp;&nbsp;(src/.../actions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#loadingReducer" title="src/app/store/reducers.ts" ><b>loadingReducer</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#loadingState" title="src/app/store/reducers.ts" ><b>loadingState</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#onPostClick" title="src/app/store/actions.ts" ><b>onPostClick</b>&nbsp;&nbsp;&nbsp;(src/.../actions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#post" title="src/app/unit-test/post.ts" ><b>post</b>&nbsp;&nbsp;&nbsp;(src/.../post.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#postList" title="src/app/unit-test/post-list.ts" ><b>postList</b>&nbsp;&nbsp;&nbsp;(src/.../post-list.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#previousPostReducer" title="src/app/store/reducers.ts" ><b>previousPostReducer</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#previousPostState" title="src/app/store/reducers.ts" ><b>previousPostState</b>&nbsp;&nbsp;&nbsp;(src/.../reducers.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#selectActivePost" title="src/app/store/selectors.ts" ><b>selectActivePost</b>&nbsp;&nbsp;&nbsp;(src/.../selectors.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#selectExtendedPostList" title="src/app/store/selectors.ts" ><b>selectExtendedPostList</b>&nbsp;&nbsp;&nbsp;(src/.../selectors.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#selectLoading" title="src/app/store/selectors.ts" ><b>selectLoading</b>&nbsp;&nbsp;&nbsp;(src/.../selectors.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#selectPreviousPost" title="src/app/store/selectors.ts" ><b>selectPreviousPost</b>&nbsp;&nbsp;&nbsp;(src/.../selectors.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#setExtendedPostList" title="src/app/store/actions.ts" ><b>setExtendedPostList</b>&nbsp;&nbsp;&nbsp;(src/.../actions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#setLoading" title="src/app/store/actions.ts" ><b>setLoading</b>&nbsp;&nbsp;&nbsp;(src/.../actions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#setPreviousPost" title="src/app/store/actions.ts" ><b>setPreviousPost</b>&nbsp;&nbsp;&nbsp;(src/.../actions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#updateExtendedPost" title="src/app/store/actions.ts" ><b>updateExtendedPost</b>&nbsp;&nbsp;&nbsp;(src/.../actions.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/store/reducers.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activePostReducer"></a>
+                    <span class="name">
+                        <span ><b>activePostReducer</b></span>
+                        <a href="#activePostReducer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createReducer(
+    activePostState,
+    on(onPostClick, (_, action) &#x3D;&gt; action.value),
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activePostState"></a>
+                    <span class="name">
+                        <span ><b>activePostState</b></span>
+                        <a href="#activePostState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ExtendedPost.html" target="_self" >ExtendedPost</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extendedPostListReducer"></a>
+                    <span class="name">
+                        <span ><b>extendedPostListReducer</b></span>
+                        <a href="#extendedPostListReducer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createReducer(
+    extendedPostListState,
+    on(setExtendedPostList, (_, action) &#x3D;&gt; action.value),
+    on(updateExtendedPost, (state, action) &#x3D;&gt; {
+        const clonedState &#x3D; [...state];
+        clonedState[action.value.index] &#x3D; action.value;
+        return clonedState;
+    })
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extendedPostListState"></a>
+                    <span class="name">
+                        <span ><b>extendedPostListState</b></span>
+                        <a href="#extendedPostListState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#Post" target="_self" >ExtendedPost[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingReducer"></a>
+                    <span class="name">
+                        <span ><b>loadingReducer</b></span>
+                        <a href="#loadingReducer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createReducer(
+    loadingState,
+    on(setLoading, (_, action) &#x3D;&gt; action.value)
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingState"></a>
+                    <span class="name">
+                        <span ><b>loadingState</b></span>
+                        <a href="#loadingState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousPostReducer"></a>
+                    <span class="name">
+                        <span ><b>previousPostReducer</b></span>
+                        <a href="#previousPostReducer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createReducer(
+    previousPostState,
+    on(setPreviousPost, (_, action) &#x3D;&gt; action.value),
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousPostState"></a>
+                    <span class="name">
+                        <span ><b>previousPostState</b></span>
+                        <a href="#previousPostState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ExtendedPost.html" target="_self" >ExtendedPost</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/constants/post-properties.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="arrayOfPostProperties"></a>
+                    <span class="name">
+                        <span ><b>arrayOfPostProperties</b></span>
+                        <a href="#arrayOfPostProperties"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>Object.keys(Post).filter((item) &#x3D;&gt; isNaN(Number(item)))</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/environment/environment.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    production: false,
+    apiUrl: &#x27;https://jsonplaceholder.typicode.com&#x27;
+  }</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/store/actions.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fetchPosts"></a>
+                    <span class="name">
+                        <span ><b>fetchPosts</b></span>
+                        <a href="#fetchPosts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createAction(
+    &#x27;[PostList] FetchPosts&#x27;
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPostClick"></a>
+                    <span class="name">
+                        <span ><b>onPostClick</b></span>
+                        <a href="#onPostClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createAction(
+    &#x27;[PostList] OnPostClick&#x27;,
+    props&lt;{ value: ExtendedPost }&gt;()
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setExtendedPostList"></a>
+                    <span class="name">
+                        <span ><b>setExtendedPostList</b></span>
+                        <a href="#setExtendedPostList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createAction(
+    &#x27;[PostList] SetExtendedPostList&#x27;,
+    props&lt;{ value: ExtendedPost[] }&gt;()
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setLoading"></a>
+                    <span class="name">
+                        <span ><b>setLoading</b></span>
+                        <a href="#setLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createAction(
+    &#x27;[Loading] SetLoading&#x27;,
+    props&lt;{ value: boolean }&gt;()
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setPreviousPost"></a>
+                    <span class="name">
+                        <span ><b>setPreviousPost</b></span>
+                        <a href="#setPreviousPost"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createAction(
+    &#x27;[PostList] SetPreviousPost&#x27;,
+    props&lt;{ value: ExtendedPost }&gt;()
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateExtendedPost"></a>
+                    <span class="name">
+                        <span ><b>updateExtendedPost</b></span>
+                        <a href="#updateExtendedPost"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createAction(
+    &#x27;[PostList] UpdateExtendedPost&#x27;,
+    props&lt;{ value: ExtendedPost }&gt;()
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/unit-test/post.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="post"></a>
+                    <span class="name">
+                        <span ><b>post</b></span>
+                        <a href="#post"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    userId: 12,
+    id: 1,
+    title: &#x27;dummy-title&#x27;,
+    body: &#x27;dummy-body&#x27;,
+    activeState: Post.title,
+    index: 0
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/unit-test/post-list.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="postList"></a>
+                    <span class="name">
+                        <span ><b>postList</b></span>
+                        <a href="#postList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[post]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/store/selectors.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectActivePost"></a>
+                    <span class="name">
+                        <span ><b>selectActivePost</b></span>
+                        <a href="#selectActivePost"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(store: StoreDTO) &#x3D;&gt; store.activePost</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectExtendedPostList"></a>
+                    <span class="name">
+                        <span ><b>selectExtendedPostList</b></span>
+                        <a href="#selectExtendedPostList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(store: StoreDTO) &#x3D;&gt; store.extendedPostList</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectLoading"></a>
+                    <span class="name">
+                        <span ><b>selectLoading</b></span>
+                        <a href="#selectLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(store: StoreDTO) &#x3D;&gt; store.loading</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectPreviousPost"></a>
+                    <span class="name">
+                        <span ><b>selectPreviousPost</b></span>
+                        <a href="#selectPreviousPost"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(store: StoreDTO) &#x3D;&gt; store.previousPost</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

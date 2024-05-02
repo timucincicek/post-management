@@ -1,0 +1,366 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>post-management documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="./" class="navbar-brand">post-management documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1>Post Management</h1>
+<p>Post Management is a small application that receives 100 posts from the jsonplaceholder API and displays them in a 10 x 10 grid with 100 boxes.</p>
+<p>Each post has the following properties: userId, id, title, and body. By default, each square in the grid displays the &#39;title&#39; property. However, clicking on posts changes the displayed property one by one.</p>
+<p>If the displayed property of a post changes and clicking on another box attempted previously, the changed displayed property of the post turns back to the default &#39;title&#39; property.</p>
+<p>To approach this problem, a parent component receives a list of posts and passes each post instance to a child component, which is powered by ngRx for state management.</p>
+<p>Details of this project and the reasons for choosing the listed approaches are provided.</p>
+<h1>Project Construction</h1>
+<p>The project has been constructed using the latest versions of npm packages and Angular utilities [Based on Angular 17], following best, commonly used practices.</p>
+<h1>Installation</h1>
+<p>Once the project is cloned, it is only enough to run <code>npm install</code> to install the required npm packages. Then, running <code>ng serve</code> starts running the project.</p>
+<p><em>[Assuming Node.js and Angular CLI are already installed.]</em></p>
+<h2>List of Added NPM Packages</h2>
+<p>Below you will find a list of npm packages installed in the project with the versions and purpose to be able to operate some actions in the project. [All those are up-to-date in the date and time they have been initialized].</p>
+<ul>
+<li><strong>@ngrx/effects</strong> and <strong>@ngrx/store</strong> [ver 17.2.0] - For state management.</li>
+<li><strong>bootstrap</strong> [ver 5.3.3] - For styling.</li>
+<li><strong>jasmine-marbles</strong> - For testing ngrx effects to simulate actions.</li>
+<li><strong>ngx-toastr</strong> [ver 18.0.0] - For showing toast messages.</li>
+</ul>
+<h2>Project Structure</h2>
+<h3>Folders</h3>
+<p>![IMG]</p>
+<ul>
+<li><strong>Components</strong>:</li>
+</ul>
+<p><img src="/Users/timucincicek/Documents/Projects/post-management/src/assets/img/component-hierarchy.jpg" alt="alt text" class="img-responsive"></p>
+<ul>
+<li>Four components have been generated apart from the app component to serve general purposes. A standalone approach was followed for creating components to avoid worrying about any kind of module and dependencies to the module.</li>
+<li>To use built-in directives, pipes, and other utilities in Angular instead of CommonModule, each member of this module has been imported individually to avoid including unused imports from CommonModule.</li>
+<li>AsyncPipe has been used in the template to subscribe to observables and consume their values, avoiding the need for unsubscribing in ngOnDestroy with an extra added Subscription value attached to it.</li>
+<li>HTML templates are stored in the template property of the component scope in .ts file for components that do not need SCSS to reduce unnecessary crowding.</li>
+<li>Components&#39; injections are made with the readonly keyword in the constructor to provide immutability.</li>
+<li>Types are used extensively throughout the codebase to ensure type safety.</li>
+<li>Constructors are mostly used for the assignments of store observables to avoid unnecessary imports and usage of ngOnInit hook.</li>
+</ul>
+<ol>
+<li><p><strong>Header</strong>: </p>
+<ul>
+<li>Bootstrap navbar has been used with a black background. On the left side, &#39;Post Management&#39; is hardcoded as the name of the app. On the right side, the currently clicked post appears with its id conditionally. As soon as a box is clicked, the observable of selected store streams the clicked post instance. Otherwise, it&#39;s empty.</li>
+</ul>
+<p>![IMG]</p>
+</li>
+<li><p><strong>Loading Spinner</strong>: </p>
+<ul>
+<li>A custom loading spinner is used to give the idea that posts are loading. The activity of toggling is managed in the state and used in the app component.</li>
+</ul>
+<p>![IMG]</p>
+</li>
+<li><p><strong>Post List</strong>: </p>
+<ul>
+<li>A list of 100 posts is fetched with the dispatched &#39;fetchPosts&#39; action from the actions to send a request to the API. Once posts are received from the getExtendedPosts$ observable, they are passed to the app-post component to be shown in the grid one by one. PostList component updates related child app-post components correctly with the help of actions. Display grid is used to manage the 10 x 10 layout.</li>
+</ul>
+<p>![IMG]</p>
+</li>
+<li><p><strong>Post</strong>: </p>
+<ul>
+<li>Component post manages click to the post and dispatches the action onPostClick with the clicked post object passed via input property from the post list component. An array called arrayOfPostProperties is extracted from a Post enum to access each property of the post with numbers.</li>
+</ul>
+<p>![IMG]</p>
+</li>
+<li><p><strong>App Component</strong>: </p>
+<ul>
+<li>App component holds always active components in the lifetime of the application, including header, post-list, and loading-spinner components. App component selects selectLoading from store to be able to subscribe to the changes of loading toggle activity.</li>
+</ul>
+<p>![IMG]</p>
+</li>
+</ol>
+<ul>
+<li><p><strong>Enums</strong>: </p>
+<ul>
+<li>Only one exported enum is used and stored in the folder enums to target properties of the object &#39;Post&#39; with the numbers to select with the corresponding indexes matching in the properties array.</li>
+</ul>
+</li>
+<li><p><strong>Models</strong>: </p>
+<ul>
+<li>Three exported interfaces are used and stored under the models directory to assign the type of objects, arrays, etc. Post is the interface based on the object that we are fetching posts from the API. ExtendedPost is an interface that extends Post with additional activeState and index. StoreDTO is a general definition of how stores look like to avoid duplicating types.</li>
+</ul>
+</li>
+<li><p><strong>Services</strong>: </p>
+<ul>
+<li>Only one ApiService is used in the entire application to fetch posts from the API. A getter baseUrl is used to access the jsonplaceholder API path inside the function getPosts to fetch a list of posts using get from HttpClient as an observable.</li>
+</ul>
+</li>
+<li><p><strong>Store</strong>: </p>
+<ul>
+<li>The store folder mainly includes everything related to store for state management, including actions, effects, reducers, and selectors, combined in a folder.</li>
+</ul>
+</li>
+<li><p><strong>Styles</strong>: </p>
+<ul>
+<li>For commonly used SCSS variables, _colors.scss is created. If the application were bigger, other utilities such as mixins, operators, functions, etc., would be included.</li>
+</ul>
+</li>
+<li><p><strong>Unit-tests</strong>: </p>
+<ul>
+<li>Mock datasets are stored in separate folders to be imported into unit test files.</li>
+</ul>
+</li>
+<li><p><strong>Environment</strong>: </p>
+<ul>
+<li>Folder environment holds the file environment.ts, which includes the apiUrl where jsonplaceholder API is stored as a string to be accessed from ApiService.</li>
+</ul>
+</li>
+</ul>
+<h1>State Management</h1>
+<p>![IMG]</p>
+<ul>
+<li>The latest version of ngRx has been used in this project with the modern functional paradigm (createReducer, createAction, createEffect, etc.).</li>
+<li>There are 4 reducers used and defined in the store in main.ts.</li>
+<li>Flow will be explained starting from actions since they are used in reducers to update the state or create side effects using effects when dispatched.</li>
+<li>Immutability is crucial in state management; spread operators are used most of the time to clone and return a new state with manipulation.</li>
+<li>All variables holding an observable include a &#39;$&#39; dollar sign at the end of the variable name to adhere to the common convention.</li>
+</ul>
+<h2>Reducers</h2>
+<h3>extendedPostListReducer:</h3>
+<ul>
+<li>Manages the whole posts state by defining extendedPostList with attached activeState and index properties. </li>
+<li>Attached setExtendedPostList directly sets the received list of extended posts to the state, updateExtendedPost updates any received post object with a received index and activeProperty to update extendedPostListState.</li>
+</ul>
+<p>![IMG]</p>
+<h3>previousPostReducer:</h3>
+<ul>
+<li>Stores and manipulates the previously manipulated active property of the post. </li>
+<li>The previous post reducer should be stored in the state and manipulated with the setPreviousPost attached to the previousPostState.</li>
+</ul>
+<p>![IMG]</p>
+<h3>activePostReducer:</h3>
+<ul>
+<li>Stores the active post of any box on each click. </li>
+<li>The currently clicked post should be stored in the activePostState to be manipulated on each dispatched onPostClickAction.</li>
+</ul>
+<p>![IMG]</p>
+<h3>loadingReducer:</h3>
+<ul>
+<li>Manages the activity of loading toggle. </li>
+<li>loadingReducer is used to manipulate loadingState with the dispatched setLoadingAction.</li>
+</ul>
+<p>![IMG]</p>
+<h2>Actions</h2>
+<h3>fetchPosts:</h3>
+<ul>
+<li>An action triggered in the setExtendedPostsEffect to send a request to the API to fetch posts and create a side effect.</li>
+</ul>
+<p>![IMG]</p>
+<h3>setExtendedPostList:</h3>
+<ul>
+<li>Sets the list of extended posts once posts are fetched from the API. </li>
+<li>Takes a list of ExtendedPost as a parameter.</li>
+</ul>
+<p>![IMG]</p>
+<h3>updateExtendedPost:</h3>
+<ul>
+<li>Manipulates any ExtendedPost with a changed title. </li>
+<li>Takes an ExtendedPost object as a parameter.</li>
+</ul>
+<p>![IMG]</p>
+<h3>onPostClick:</h3>
+<ul>
+<li>Sets any ExtendedPost on each click. </li>
+<li>Takes an ExtendedPost object as a parameter.</li>
+</ul>
+<p>![IMG]</p>
+<h3>setPreviousPost:</h3>
+<ul>
+<li>Sets the previous post to be dispatched in the onPostClickEffect once the actively clicked box has changed.</li>
+</ul>
+<p>![IMG]</p>
+<h3>setLoading:</h3>
+<ul>
+<li>Sets loadingState with the value true or false attached to loadingReducer.</li>
+</ul>
+<p>![IMG]</p>
+<h2>Effects</h2>
+<p>![IMG]</p>
+<h3>setExtendedPostsEffect:</h3>
+<ol>
+<li>Once the action fetchPosts is dispatched, the loading toggle is activated with the dispatched setLoading to wait until the API has returned successfully.</li>
+<li>Thanks to switchMap, the observable from apiService is switched to subscribe to fetch the list of posts.</li>
+<li>Once the observable has been completed, the response of posts array is mapped to return extendedPostItems with attached activeState and index. A success message is displayed by calling success from the toastr service. In the end of the map operator, setExtendedPostList is returned to be dispatched with extendedPostItems array.</li>
+<li>Error handling is provided using catchError to print error messages via toastr without breaking observable chains.</li>
+<li>Either response ended successfully or failed to inactive loading toggle, setLoading action is dispatched within the tap operator.</li>
+</ol>
+<p>![IMG]</p>
+<h3>onPostClickEffect:</h3>
+<ol>
+<li>Once onPostClick is dispatched, the previousPost state from store is selected with withLatestFrom operator to be compared with clickedPost action.</li>
+<li>With destruction applied in the tap operator to be able to get the values of previous and active post objects. Since clicking a box always should change the displayed property, action updateExtendedPost should always be dispatched with the manipulated activeState value.</li>
+<li>The manipulation of activeState is basically incremented by one and calculated the mod of 4. So it would always be repeated from 0 to 3 one by one. Using these numbers, property names can be accessed with the corresponding index correctly.</li>
+<li>On each mouse click, it should be checked if a new post is being clicked. In case it does, the activeState property of the previously stored post should change to title as a default.</li>
+<li>To be able to change the previousPost, the action setPreviousPost should be dispatched if the condition matches.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
