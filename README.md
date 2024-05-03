@@ -86,21 +86,15 @@ Folder environment holds the file environment.ts, which includes the apiUrl wher
 
    - A list of 100 posts is fetched with the dispatched 'fetchPosts' action from the actions to send a request to the API. Once posts are received from the getExtendedPosts$ observable, they are passed to the app-post component to be shown in the grid one by one. PostList component updates related child app-post components correctly with the help of actions. Display grid is used to manage the 10 x 10 layout.
 
-   ![IMG]
-
-5. **Post**: 
+4. **Post**: 
    - Component post manages click to the post and dispatches the action onPostClick with the clicked post object passed via input property from the post list component. An array called arrayOfPostProperties is extracted from a Post enum to access each property of the post with numbers.
 
-   ![IMG]
+![post](https://github.com/timucincicek/post-management/assets/39439504/ed285817-ccd3-498e-b9e0-ac7a1ea366f8)
 
-6. **App Component**: 
+5. **App Component**: 
    - App component holds always active components in the lifetime of the application, including header, post-list, and loading-spinner components. App component selects selectLoading from store to be able to subscribe to the changes of loading toggle activity.
 
-   ![IMG]
-
 # State Management
-
-![IMG]
 
 - The latest version of ngRx has been used in this project with the modern functional paradigm (createReducer, createAction, createEffect, etc.).
 - There are 4 reducers used and defined in the store in main.ts.
@@ -114,64 +108,43 @@ Folder environment holds the file environment.ts, which includes the apiUrl wher
 - Manages the whole posts state by defining extendedPostList with attached activeState and index properties. 
 - Attached setExtendedPostList directly sets the received list of extended posts to the state, updateExtendedPost updates any received post object with a received index and activeProperty to update extendedPostListState.
 
-![IMG]
-
 ### previousPostReducer:
 - Stores and manipulates the previously manipulated active property of the post. 
 - The previous post reducer should be stored in the state and manipulated with the setPreviousPost attached to the previousPostState.
-
-![IMG]
-
+  
 ### activePostReducer:
 - Stores the active post of any box on each click. 
 - The currently clicked post should be stored in the activePostState to be manipulated on each dispatched onPostClickAction.
 
-![IMG]
-
 ### loadingReducer:
 - Manages the activity of loading toggle. 
 - loadingReducer is used to manipulate loadingState with the dispatched setLoadingAction.
-
-![IMG]
 
 ## Actions
 
 ### fetchPosts:
 - An action triggered in the setExtendedPostsEffect to send a request to the API to fetch posts and create a side effect.
 
-![IMG]
-
 ### setExtendedPostList:
 - Sets the list of extended posts once posts are fetched from the API. 
 - Takes a list of ExtendedPost as a parameter.
-
-![IMG]
 
 ### updateExtendedPost:
 - Manipulates any ExtendedPost with a changed title. 
 - Takes an ExtendedPost object as a parameter.
 
-![IMG]
-
 ### onPostClick:
 - Sets any ExtendedPost on each click. 
 - Takes an ExtendedPost object as a parameter.
 
-![IMG]
-
 ### setPreviousPost:
 - Sets the previous post to be dispatched in the onPostClickEffect once the actively clicked box has changed.
-
-![IMG]
 
 ### setLoading:
 - Sets loadingState with the value true or false attached to loadingReducer.
 
-![IMG]
 
 ## Effects
-
-![IMG]
 
 ### setExtendedPostsEffect:
 1. Once the action fetchPosts is dispatched, the loading toggle is activated with the dispatched setLoading to wait until the API has returned successfully.
@@ -180,11 +153,13 @@ Folder environment holds the file environment.ts, which includes the apiUrl wher
 4. Error handling is provided using catchError to print error messages via toastr without breaking observable chains.
 5. Either response ended successfully or failed to inactive loading toggle, setLoading action is dispatched within the tap operator.
 
-![IMG]
-
 ### onPostClickEffect:
 1. Once onPostClick is dispatched, the previousPost state from store is selected with withLatestFrom operator to be compared with clickedPost action.
 2. With destruction applied in the tap operator to be able to get the values of previous and active post objects. Since clicking a box always should change the displayed property, action updateExtendedPost should always be dispatched with the manipulated activeState value.
 3. The manipulation of activeState is basically incremented by one and calculated the mod of 4. So it would always be repeated from 0 to 3 one by one. Using these numbers, property names can be accessed with the corresponding index correctly.
 4. On each mouse click, it should be checked if a new post is being clicked. In case it does, the activeState property of the previously stored post should change to title as a default.
 5. To be able to change the previousPost, the action setPreviousPost should be dispatched if the condition matches.
+   
+
+## Selectors
+- Selectors are callback functions passed into store.select to return the desired state as an observable.
