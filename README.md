@@ -33,9 +33,32 @@ Below you will find a list of npm packages installed in the project with the ver
 
 ### Folders
 
-![IMG]
+![ss](https://github.com/timucincicek/post-management/assets/39439504/8161c9e2-7b76-4a8c-aa10-efd82a5b1c74)
 
-- **Components**:
+- **Enums**: 
+Only one exported enum is used and stored in the folder enums to target properties of the object 'Post' with the numbers to select with the corresponding indexes matching in the properties array.
+
+- **Models**: 
+Three exported interfaces are used and stored under the models directory to assign the type of objects, arrays, etc. Post is the interface based on the object that we are fetching posts from the API. ExtendedPost is an interface that extends Post with additional activeState and index. StoreDTO is a general definition of how stores look like to avoid duplicating types.
+
+- **Services**: 
+Only one ApiService is used in the entire application to fetch posts from the API. A getter baseUrl is used to access the jsonplaceholder API path inside the function getPosts to fetch a list of posts using get from HttpClient as an observable.
+
+- **Store**: 
+The store folder mainly includes everything related to store for state management, including actions, effects, reducers, and selectors, combined in a folder.
+
+- **Styles**: 
+For commonly used SCSS variables, _colors.scss is created. If the application were bigger, other utilities such as mixins, operators, functions, etc., would be included.
+
+- **Unit-tests**: 
+Mock datasets are stored in separate folders to be imported into unit test files.
+
+- **Environment**: 
+Folder environment holds the file environment.ts, which includes the apiUrl where jsonplaceholder API is stored as a string to be accessed from ApiService.
+
+### Components
+
+![hierarchy](https://github.com/timucincicek/post-management/assets/39439504/7636c9c7-1316-4476-983b-08dbaa021efc)
 
   - Four components have been generated apart from the app component to serve general purposes. A standalone approach was followed for creating components to avoid worrying about any kind of module and dependencies to the module.
   - To use built-in directives, pipes, and other utilities in Angular instead of CommonModule, each member of this module has been imported individually to avoid including unused imports from CommonModule.
@@ -45,51 +68,35 @@ Below you will find a list of npm packages installed in the project with the ver
   - Types are used extensively throughout the codebase to ensure type safety.
   - Constructors are mostly used for the assignments of store observables to avoid unnecessary imports and usage of ngOnInit hook.
 
-1. **Header**: 
+1. **Header**:
+
+![header](https://github.com/timucincicek/post-management/assets/39439504/7f4531fd-67ca-41a9-84f4-8554878fc397)
+
    - Bootstrap navbar has been used with a black background. On the left side, 'Post Management' is hardcoded as the name of the app. On the right side, the currently clicked post appears with its id conditionally. As soon as a box is clicked, the observable of selected store streams the clicked post instance. Otherwise, it's empty.
 
-   ![IMG]
+2. **Loading Spinner**:
 
-2. **Loading Spinner**: 
+![loading](https://github.com/timucincicek/post-management/assets/39439504/594f100e-126a-4292-a84e-5e30e0e93e48)
+
    - A custom loading spinner is used to give the idea that posts are loading. The activity of toggling is managed in the state and used in the app component.
 
-   ![IMG]
+3. **Post List**:
 
-3. **Post List**: 
+![post-list](https://github.com/timucincicek/post-management/assets/39439504/d3e576cf-3048-4234-a281-296904fc155d)
+
    - A list of 100 posts is fetched with the dispatched 'fetchPosts' action from the actions to send a request to the API. Once posts are received from the getExtendedPosts$ observable, they are passed to the app-post component to be shown in the grid one by one. PostList component updates related child app-post components correctly with the help of actions. Display grid is used to manage the 10 x 10 layout.
 
    ![IMG]
 
-4. **Post**: 
+5. **Post**: 
    - Component post manages click to the post and dispatches the action onPostClick with the clicked post object passed via input property from the post list component. An array called arrayOfPostProperties is extracted from a Post enum to access each property of the post with numbers.
 
    ![IMG]
 
-5. **App Component**: 
+6. **App Component**: 
    - App component holds always active components in the lifetime of the application, including header, post-list, and loading-spinner components. App component selects selectLoading from store to be able to subscribe to the changes of loading toggle activity.
 
    ![IMG]
-
-- **Enums**: 
-  - Only one exported enum is used and stored in the folder enums to target properties of the object 'Post' with the numbers to select with the corresponding indexes matching in the properties array.
-
-- **Models**: 
-  - Three exported interfaces are used and stored under the models directory to assign the type of objects, arrays, etc. Post is the interface based on the object that we are fetching posts from the API. ExtendedPost is an interface that extends Post with additional activeState and index. StoreDTO is a general definition of how stores look like to avoid duplicating types.
-
-- **Services**: 
-  - Only one ApiService is used in the entire application to fetch posts from the API. A getter baseUrl is used to access the jsonplaceholder API path inside the function getPosts to fetch a list of posts using get from HttpClient as an observable.
-
-- **Store**: 
-  - The store folder mainly includes everything related to store for state management, including actions, effects, reducers, and selectors, combined in a folder.
-
-- **Styles**: 
-  - For commonly used SCSS variables, _colors.scss is created. If the application were bigger, other utilities such as mixins, operators, functions, etc., would be included.
-
-- **Unit-tests**: 
-  - Mock datasets are stored in separate folders to be imported into unit test files.
-
-- **Environment**: 
-  - Folder environment holds the file environment.ts, which includes the apiUrl where jsonplaceholder API is stored as a string to be accessed from ApiService.
 
 # State Management
 
