@@ -2,7 +2,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { onPostClick } from 'src/app/store/actions';
-import { post } from 'src/app/unit-test/post';
+import { extendedPost } from 'src/app/unit-test/post';
 import { PostComponent } from './post.component';
 
 describe('PostComponent', () => {
@@ -16,7 +16,7 @@ describe('PostComponent', () => {
       store = TestBed.inject(Store);
       fixture = TestBed.createComponent(PostComponent);
       component = fixture.componentInstance;
-      component.post = post;
+      component.post = extendedPost;
     });
   }));
 

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { fetchPosts } from 'src/app/store/actions';
-import { postList } from 'src/app/unit-test/post-list';
+import { extendedPostList } from 'src/app/unit-test/post';
 import { PostListComponent } from './post-list.component';
 
 describe('PostListComponent', () => {
@@ -44,12 +44,12 @@ describe('PostListComponent', () => {
     });
 
     it('should render the correct number of post components', () => {
-      component.getExtendedPosts$ = of(postList);
+      component.getExtendedPosts$ = of(extendedPostList);
       component.ngOnInit();
       fixture.detectChanges();
       const compiled: any = fixture.nativeElement;
       const postComponents = compiled.querySelectorAll('app-post');
-      expect(postComponents.length).toEqual(postList.length);
+      expect(postComponents.length).toEqual(extendedPostList.length);
     });
 
   })

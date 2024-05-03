@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { HeaderComponent } from './header.component';
 import { StoreDTO } from 'src/app/models/store';
-import { post } from 'src/app/unit-test/post';
+import { extendedPost } from 'src/app/unit-test/post';
 import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
@@ -13,7 +13,7 @@ describe('HeaderComponent', () => {
   let element: HTMLElement;
   let fixture: ComponentFixture<HeaderComponent>;
   let store: Store<StoreDTO>;
-  const initialState = { activePost: post };
+  const initialState = { activePost: extendedPost };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -56,7 +56,7 @@ describe('HeaderComponent', () => {
   describe('TS File', () => {
     it('should get active post from store', () => {
       component.getActivePost$.subscribe((result) => {
-        expect(result).toBe(post);
+        expect(result).toEqual(extendedPost);
       })
     });
   });
